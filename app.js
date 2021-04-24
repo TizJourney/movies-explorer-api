@@ -22,7 +22,7 @@ const { PORT = 3001 } = process.env;
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect('mongodb://localhost:27017filmsdb', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,

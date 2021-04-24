@@ -13,10 +13,10 @@ require('dotenv').config();
 // const cardRoutes = require('./routes/cards');
 
 // const auth = require('./middlewares/auth');
-// const errorHandler = require('./middlewares/error');
+const errorHandler = require('./middlewares/error');
 const logger = require('./middlewares/logger');
 
-// const errorTypes = require('./utils/errors');
+const errorTypes = require('./utils/errors');
 
 const { PORT = 3001 } = process.env;
 
@@ -53,12 +53,6 @@ app.use(cors(options));
 
 app.use(logger.requestLogger);
 
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
-
 // app.use('/', userNotAuthRoutes);
 
 // app.use(auth);
@@ -66,13 +60,13 @@ app.get('/crash-test', () => {
 // app.use('/', userRoutes);
 // app.use('/', cardRoutes);
 
-// app.use(() => {
-//   throw new errorTypes.UrlNotFoundError('Несуществующий путь');
-// });
+app.use(() => {
+  throw new errorTypes.UrlNotFoundError('Несуществующий путь');
+});
 
 app.use(celebrate.errors());
 
 app.use(logger.errorLogger);
-// app.use(errorHandler);
+app.use(errorHandler);
 
 app.listen(PORT, () => {});

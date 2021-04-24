@@ -14,7 +14,7 @@ require('dotenv').config();
 
 // const auth = require('./middlewares/auth');
 // const errorHandler = require('./middlewares/error');
-// const logger = require('./middlewares/logger');
+const logger = require('./middlewares/logger');
 
 // const errorTypes = require('./utils/errors');
 
@@ -51,7 +51,7 @@ app.use(limiter);
 app.use(helmet());
 app.use(cors(options));
 
-// app.use(logger.requestLogger);
+app.use(logger.requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -72,7 +72,7 @@ app.get('/crash-test', () => {
 
 app.use(celebrate.errors());
 
-// app.use(logger.errorLogger);
+app.use(logger.errorLogger);
 // app.use(errorHandler);
 
 app.listen(PORT, () => {});

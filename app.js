@@ -12,7 +12,7 @@ require('dotenv').config();
 // const userRoutes = require('./routes/users');
 // const cardRoutes = require('./routes/cards');
 
-// const auth = require('./middlewares/auth');
+const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/error');
 const logger = require('./middlewares/logger');
 
@@ -55,7 +55,7 @@ app.use(logger.requestLogger);
 
 // app.use('/', userNotAuthRoutes);
 
-// app.use(auth);
+app.use(auth);
 
 // app.use('/', userRoutes);
 // app.use('/', cardRoutes);

@@ -8,15 +8,15 @@ const helmet = require('helmet');
 
 require('dotenv').config();
 
-const userNotAuthRoutes = require('./routes/users-no-auth');
-const userRoutes = require('./routes/users');
-const cardRoutes = require('./routes/cards');
+// const userNotAuthRoutes = require('./routes/users-no-auth');
+// const userRoutes = require('./routes/users');
+// const cardRoutes = require('./routes/cards');
 
-const auth = require('./middlewares/auth');
-const errorHandler = require('./middlewares/error');
-const logger = require('./middlewares/logger');
+// const auth = require('./middlewares/auth');
+// const errorHandler = require('./middlewares/error');
+// const logger = require('./middlewares/logger');
 
-const errorTypes = require('./utils/errors');
+// const errorTypes = require('./utils/errors');
 
 const { PORT = 3001 } = process.env;
 
@@ -51,7 +51,7 @@ app.use(limiter);
 app.use(helmet());
 app.use(cors(options));
 
-app.use(logger.requestLogger);
+// app.use(logger.requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -59,20 +59,20 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.use('/', userNotAuthRoutes);
+// app.use('/', userNotAuthRoutes);
 
-app.use(auth);
+// app.use(auth);
 
-app.use('/', userRoutes);
-app.use('/', cardRoutes);
+// app.use('/', userRoutes);
+// app.use('/', cardRoutes);
 
-app.use(() => {
-  throw new errorTypes.UrlNotFoundError('Несуществующий путь');
-});
+// app.use(() => {
+//   throw new errorTypes.UrlNotFoundError('Несуществующий путь');
+// });
 
 app.use(celebrate.errors());
 
-app.use(logger.errorLogger);
-app.use(errorHandler);
+// app.use(logger.errorLogger);
+// app.use(errorHandler);
 
 app.listen(PORT, () => {});

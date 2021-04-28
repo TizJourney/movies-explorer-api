@@ -2,9 +2,25 @@ const Movie = require('../models/movie');
 const { parseError, LoginError, NotFoundError } = require('../utils/errors');
 
 module.exports.createMovie = (req, res, next) => {
-  const { name, link } = req.body;
+  const {
+    country, director, duration, year, description, image,
+    trailer, nameRU, nameEN, thumbnail, movieId,
+  } = req.body;
 
-  Movie.create({ name, link, owner: req.user._id })
+  Movie.create({
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailer,
+    nameRU,
+    nameEN,
+    thumbnail,
+    movieId,
+    owner: req.user._id,
+  })
     .then((data) => {
       res.send(data);
     })

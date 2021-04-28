@@ -1,10 +1,10 @@
-const Card = require('../models/movie');
+const Movie = require('../models/movie');
 const { parseError, LoginError, NotFoundError } = require('../utils/errors');
 
 module.exports.createMovie = (req, res, next) => {
   const { name, link } = req.body;
 
-  Card.create({ name, link, owner: req.user._id })
+  Movie.create({ name, link, owner: req.user._id })
     .then((data) => {
       res.send(data);
     })
@@ -12,7 +12,7 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.getMovies = (req, res, next) => {
-  Card.find({}).sort('-createdAt')
+  Movie.find({})
     .then((data) => {
       res.send(data);
     })
@@ -23,16 +23,16 @@ module.exports.getMovies = (req, res, next) => {
 };
 
 module.exports.deleteMovieById = (req, res, next) => {
-  Card.findById(req.params.id)
+  Movie.findById(req.params.id)
     .orFail(() => {
-      throw new NotFoundError(`Карточка с ${req.params.id} не найдена`);
+      throw new NotFoundError(`Фильм с ${req.params.id} не найден`);
     })
     .then((data) => {
       if (data.owner._id !== req.user._id) {
-        throw new LoginError('Недостаточно прав для удаления карточки');
+        throw new LoginError('Недостаточно прав для удаления фильма');
       }
     })
-    .then(() => Card.findByIdAndRemove(req.params.id))
+    .then(() => Movie.findByIdAndRemove(req.params.id))
     .then((data) => {
       res.send(data);
     })

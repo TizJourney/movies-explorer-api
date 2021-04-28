@@ -26,7 +26,6 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: false,
-    default: 'Жак-Ив Кусто',
     minlength: 2,
     maxlength: 30,
   },

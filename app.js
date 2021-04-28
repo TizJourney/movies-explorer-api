@@ -9,8 +9,8 @@ const helmet = require('helmet');
 require('dotenv').config();
 
 const userNotAuthRoutes = require('./routes/users-no-auth');
-// const userRoutes = require('./routes/users');
-// const cardRoutes = require('./routes/cards');
+const userRoutes = require('./routes/users');
+const movieRoutes = require('./routes/movies');
 
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/error');
@@ -57,8 +57,8 @@ app.use('/', userNotAuthRoutes);
 
 app.use(auth);
 
-// app.use('/', userRoutes);
-// app.use('/', cardRoutes);
+app.use('/', userRoutes);
+app.use('/', movieRoutes);
 
 app.use(() => {
   throw new errorTypes.UrlNotFoundError('Несуществующий путь');

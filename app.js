@@ -8,7 +8,7 @@ const helmet = require('helmet');
 
 require('dotenv').config();
 
-// const userNotAuthRoutes = require('./routes/users-no-auth');
+const userNotAuthRoutes = require('./routes/users-no-auth');
 // const userRoutes = require('./routes/users');
 // const cardRoutes = require('./routes/cards');
 
@@ -53,7 +53,7 @@ app.use(cors(options));
 
 app.use(logger.requestLogger);
 
-// app.use('/', userNotAuthRoutes);
+app.use('/', userNotAuthRoutes);
 
 app.use(auth);
 

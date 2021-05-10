@@ -1,5 +1,5 @@
 const Movie = require('../models/movie');
-const { parseError, LoginError, NotFoundError } = require('../utils/errors');
+const { parseMoviesError, LoginError, NotFoundError } = require('../utils/errors');
 
 module.exports.createMovie = (req, res, next) => {
   const {
@@ -24,6 +24,9 @@ module.exports.createMovie = (req, res, next) => {
     .then((data) => {
       res.send(data);
     })
+    .catch((err) => {
+      parseMoviesError(err);
+    })
     .catch(next);
 };
 
@@ -33,7 +36,7 @@ module.exports.getMovies = (req, res, next) => {
       res.send(data);
     })
     .catch((err) => {
-      parseError(err);
+      parseMoviesError(err);
     })
     .catch(next);
 };
@@ -51,6 +54,9 @@ module.exports.deleteMovieById = (req, res, next) => {
     .then(() => Movie.findByIdAndRemove(req.params.id))
     .then((data) => {
       res.send(data);
+    })
+    .catch((err) => {
+      parseMoviesError(err);
     })
     .catch(next);
 };

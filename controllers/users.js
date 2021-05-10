@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
-const { parseError, NotFoundError } = require('../utils/errors');
+const { parseUsersError, NotFoundError } = require('../utils/errors');
 
 const { tokenKey } = require('../utils/token');
 
@@ -21,7 +21,7 @@ module.exports.createUser = (req, res, next) => {
       });
     })
     .catch((err) => {
-      parseError(err);
+      parseUsersError(err);
     })
     .catch(next);
 };
@@ -50,7 +50,7 @@ module.exports.getUserInfo = (req, res, next) => {
       res.send(data);
     })
     .catch((err) => {
-      parseError(err);
+      parseUsersError(err);
     })
     .catch(next);
 };
@@ -74,7 +74,7 @@ module.exports.updateUserInfo = (req, res, next) => {
       res.send(data);
     })
     .catch((err) => {
-      parseError(err);
+      parseUsersError(err);
     })
     .catch(next);
 };

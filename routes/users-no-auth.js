@@ -17,9 +17,7 @@ router.post('/signup',
     body: Joi.object().keys({
       email: Joi.string().required().email({ minDomainSegments: 2 }),
       password: Joi.string().required().min(2).max(30),
-      name: Joi.string().min(2).max(80),
-      about: Joi.string().min(2).max(80),
-      avatar: Joi.string().uri(),
+      name: Joi.string().required().min(2).max(80),
     }),
   }),
   controller.createUser);

@@ -42,7 +42,7 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.getUserInfo = (req, res, next) => {
-  User.findById(req.user._id)
+  User.findById(req.user._id, { _id: 0 })
     .orFail(() => {
       throw new NotFoundError(`Пользователь c ${req.user._id} не найден`);
     })

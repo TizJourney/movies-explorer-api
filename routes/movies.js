@@ -8,8 +8,17 @@ router.get('/movies', controller.getMovies);
 router.post('/movies',
   celebrate({
     body: Joi.object().keys({
-      name: Joi.string().required().min(2).max(30),
-      link: Joi.string().required().uri(),
+      country: Joi.string().required().min(3),
+      director: Joi.string().required().min(3),
+      duration: Joi.number().required().min(0),
+      year: Joi.string().required().min(0),
+      description: Joi.string().required(),
+      image: Joi.string().required().uri(),
+      trailer: Joi.string().required().uri(),
+      thumbnail: Joi.string().required().uri(),
+      movieId: Joi.string().required(),
+      nameRU: Joi.string().required().min(3),
+      nameEN: Joi.string().required().min(3),
     }),
   }),
   controller.createMovie);

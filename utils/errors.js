@@ -42,6 +42,13 @@ class LoginError extends Error {
   }
 }
 
+class ForbiddenError extends Error {
+  constructor(message) {
+    super(message);
+    this.statusCode = 403;
+  }
+}
+
 const parseUsersError = (err) => {
   if (['CastError', 'ValidationError'].includes(err.name)) {
     throw new BadRequestError(err.message);
@@ -74,4 +81,5 @@ module.exports = {
   NotFoundError,
   UrlNotFoundError,
   LoginError,
+  ForbiddenError,
 };

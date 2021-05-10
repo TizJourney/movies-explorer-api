@@ -1,5 +1,10 @@
 const Movie = require('../models/movie');
-const { parseMoviesError, LoginError, NotFoundError } = require('../utils/errors');
+
+const {
+  parseMoviesError,
+  NotFoundError,
+  ForbiddenError,
+} = require('../utils/errors');
 
 module.exports.createMovie = (req, res, next) => {
   const {
@@ -45,7 +50,7 @@ module.exports.deleteMovieById = (req, res, next) => {
     })
     .then((data) => {
       if (data.owner.toString() !== req.user._id) {
-        throw new LoginError('Недостаточно прав для удаления фильма');
+        throw new ForbiddenError('Недостаточно прав для удаления фильма');
       }
     })
     .then(() => Movie.findOneAndRemove({ movieId: req.params.id }))

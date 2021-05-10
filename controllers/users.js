@@ -64,6 +64,7 @@ module.exports.updateUserInfo = (req, res, next) => {
     {
       new: true,
       runValidators: true,
+      select: { _id: 0 },
     },
   )
     .orFail(() => {

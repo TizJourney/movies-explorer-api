@@ -22,6 +22,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
+            pm2 kill
             rm ~/backend -r -f
 
       - name: copy file via ssh key
@@ -33,6 +34,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           source: .
           target: ~/backend
+
       - name: executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
         with:
@@ -43,7 +45,10 @@ jobs:
           script: |
             cd ~/backend
             npm install
-      - name: the job failed
+            pm2 start app.js
+            sudo cp nginx.conf /etc/nginx/sites-available/default
+            sudo systemctl restart nginx
+    - name: the job failed
         if: ${{ failure() }}
         uses: appleboy/telegram-action@master
         with:

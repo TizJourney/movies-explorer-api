@@ -48,6 +48,7 @@ jobs:
             pm2 start app.js
             sudo cp nginx.conf /etc/nginx/sites-available/default
             sudo systemctl restart nginx
+
     - name: the job failed
         if: ${{ failure() }}
         uses: appleboy/telegram-action@master

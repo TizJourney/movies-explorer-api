@@ -8,17 +8,17 @@ router.get('/movies', controller.getMovies);
 router.post('/movies',
   celebrate({
     body: Joi.object().keys({
-      country: Joi.string().required().min(1).max(30),
-      director: Joi.string().required().min(1).max(30),
+      country: Joi.string().required().min(3),
+      director: Joi.string().required().min(3),
       duration: Joi.number().required().min(0),
-      year: Joi.number().required().min(1900), // todo: убрать в переменную и в моделе тоже
-      description: Joi.string().required().min(1),
+      year: Joi.string().required().min(0),
+      description: Joi.string().required(),
       image: Joi.string().required().uri(),
       trailer: Joi.string().required().uri(),
-      nameRU: Joi.string().required().min(1),
-      nameEN: Joi.string().required().min(1),
       thumbnail: Joi.string().required().uri(),
-      movieId: Joi.string().required().length(24),
+      movieId: Joi.string().required(),
+      nameRU: Joi.string().required().min(3),
+      nameEN: Joi.string().required().min(3),
     }),
   }),
   controller.createMovie);
@@ -26,7 +26,7 @@ router.post('/movies',
 router.delete('/movies/:id',
   celebrate({
     params: Joi.object().keys({
-      id: Joi.string().hex().length(24).required(),
+      id: Joi.string().required(),
     }),
   }),
   controller.deleteMovieById);

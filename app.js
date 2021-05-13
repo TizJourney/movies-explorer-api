@@ -2,8 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const celebrate = require('celebrate');
-const cors = require('cors');
-const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 
 require('dotenv').config();
@@ -15,6 +13,8 @@ const movieRoutes = require('./routes/movies');
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/error');
 const logger = require('./middlewares/logger');
+const limiter = require('./middlewares/limiter');
+const cors = require('./middlewares/cors');
 
 const errorTypes = require('./utils/errors');
 
@@ -22,34 +22,17 @@ const { PORT = 3001 } = process.env;
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017filmsdb', {
+mongoose.connect('mongodb://localhost:27017/filmsdb', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
-});
-
-const options = {
-  origin: [
-    'http://api.tizjourney-mesto.nomoredomains.club',
-    'https://api.tizjourney-mesto.nomoredomains.club',
-    'http://tizjourney-mesto.nomoredomains.club',
-    'https://tizjourney-mesto.nomoredomains.club',
-    'https://github.com/TizJourney',
-    'http://localhost:3000',
-    'https://localhost:3000',
-  ],
-};
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 минут
-  max: 100,
 });
 
 app.use(bodyParser.json());
 
 app.use(limiter);
 app.use(helmet());
-app.use(cors(options));
+app.use(cors);
 
 app.use(logger.requestLogger);
 

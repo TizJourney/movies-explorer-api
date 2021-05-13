@@ -25,9 +25,8 @@ const movieSchema = new mongoose.Schema({
     min: [0, 'Поле duration неотрициальное'],
   },
   year: {
-    type: Number,
+    type: String,
     required: [true, 'Поле year является обязательным'],
-    min: [1900, 'Поле year не менее 1900'],
   },
   description: {
     type: String,
@@ -66,8 +65,9 @@ const movieSchema = new mongoose.Schema({
   owner: userLinkDescription,
   movieId: {
     type: String,
+    unique: true,
   },
-  nameRu: {
+  nameRU: {
     type: String,
     required: [true, 'Поле nameRu является обязательным'],
     minlength: 3,

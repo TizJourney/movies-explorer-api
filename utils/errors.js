@@ -42,7 +42,14 @@ class LoginError extends Error {
   }
 }
 
-const parseError = (err) => {
+class ForbiddenError extends Error {
+  constructor(message) {
+    super(message);
+    this.statusCode = 403;
+  }
+}
+
+const parseUsersError = (err) => {
   if (['CastError', 'ValidationError'].includes(err.name)) {
     throw new BadRequestError(err.message);
   }
@@ -54,11 +61,25 @@ const parseError = (err) => {
   throw new InternalError('На сервере произошла ошибка');
 };
 
+const parseMoviesError = (err) => {
+  if (['CastError', 'ValidationError'].includes(err.name)) {
+    throw new BadRequestError(err.message);
+  }
+
+  if (err.name === 'MongoError' && err.code === 11000) {
+    throw new ConflictError('Такой фильм уже существует');
+  }
+
+  throw new InternalError('На сервере произошла ошибка');
+};
+
 module.exports = {
-  parseError,
+  parseUsersError,
+  parseMoviesError,
   InternalError,
   BadRequestError,
   NotFoundError,
   UrlNotFoundError,
   LoginError,
+  ForbiddenError,
 };

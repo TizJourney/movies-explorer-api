@@ -50,12 +50,12 @@ jobs:
             sudo systemctl restart nginx
 
       - name: the job failed
-          if: ${{ failure() }}
-          uses: appleboy/telegram-action@master
-          with:
-            to: ${{ secrets.TELEGRAM_TO }}
-            token: ${{ secrets.TELEGRAM_TOKEN }}
-            message: ${{ github.workflow }} - возникли ошибки при выкатке проекта!
+        if: ${{ failure() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: ${{ github.workflow }} - возникли ошибки при выкатке проекта!
 
 
   send_message:

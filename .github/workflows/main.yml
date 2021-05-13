@@ -42,7 +42,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             cd ~/backend
-            npm init
+            npm install
 
   send_message:
     name: Send message

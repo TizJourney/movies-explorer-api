@@ -30,7 +30,7 @@ jobs:
         with:
           envkey_NODE_ENV: "production"
           envkey_PORT: 3333
-          envkey_SECRET_KEY: ${{ secrets.JWT_SECRET }}
+          envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
       - name: copy file via ssh key
         uses: appleboy/scp-action@master

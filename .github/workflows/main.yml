@@ -57,7 +57,7 @@ jobs:
         message: ${{ github.workflow }} успешно выполнен!
 
 
-  send_message:
+  send_failure_message:
     name: Send failure message
     runs-on: ubuntu-latest
     needs: deploy.result.failure

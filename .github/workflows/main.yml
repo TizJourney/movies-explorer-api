@@ -25,9 +25,9 @@ jobs:
             pm2 kill
             rm ~/backend -r -f
 
-    - name: make envfile
-      uses: SpicyPizza/create-envfile@v1
-      with:
+      - name: make envfile
+        uses: SpicyPizza/create-envfile@v1
+        with:
         envkey_NODE_ENV: "production"
         envkey_PORT: 3333
         envkey_SECRET_KEY: ${{ secrets.JWT_SECRET }}

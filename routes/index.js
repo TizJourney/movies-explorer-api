@@ -6,7 +6,7 @@ const movieRoutes = require('./movies');
 
 const auth = require('../middlewares/auth');
 
-const errorTypes = require('../utils/errors');
+const errors = require('../utils/errors');
 
 indexRouter.use('/', userNotAuthRoutes);
 
@@ -16,7 +16,7 @@ indexRouter.use('/', userRoutes);
 indexRouter.use('/', movieRoutes);
 
 indexRouter.use(() => {
-  throw new errorTypes.UrlNotFoundError('Несуществующий путь');
+  throw new errors.RequestError(errors.errorsContexts.badRequestError);
 });
 
 module.exports = indexRouter;

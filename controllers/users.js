@@ -2,8 +2,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
-const { parseUsersError, NotFoundError } = require('../utils/errors');
 
+const errors = require('../utils/errors');
 const { tokenKey } = require('../utils/token');
 
 module.exports.createUser = (req, res, next) => {
@@ -21,7 +21,7 @@ module.exports.createUser = (req, res, next) => {
       });
     })
     .catch((err) => {
-      parseUsersError(err);
+      errors.parseUsersError(err);
     })
     .catch(next);
 };
@@ -44,13 +44,13 @@ module.exports.login = (req, res, next) => {
 module.exports.getUserInfo = (req, res, next) => {
   User.findById(req.user._id, { _id: 0 })
     .orFail(() => {
-      throw new NotFoundError(`Пользователь c ${req.user._id} не найден`);
+      throw new errors.RequestError(errors.errorsContexts.motFoundError, `Пользователь c ${req.user._id} не найден`);
     })
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
-      parseUsersError(err);
+      errors.parseUsersError(err);
     })
     .catch(next);
 };
@@ -68,13 +68,13 @@ module.exports.updateUserInfo = (req, res, next) => {
     },
   )
     .orFail(() => {
-      throw new NotFoundError(`Пользователь c ${req.user._id} не найден`);
+      throw new errors.RequestError(errors.errorsContexts.motFoundError, `Пользователь c ${req.user._id} не найден`);
     })
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
-      parseUsersError(err);
+      errors.parseUsersError(err);
     })
     .catch(next);
 };

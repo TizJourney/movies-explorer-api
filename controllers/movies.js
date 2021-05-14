@@ -1,10 +1,6 @@
 const Movie = require('../models/movie');
 
-const {
-  parseMoviesError,
-  NotFoundError,
-  ForbiddenError,
-} = require('../utils/errors');
+const errors = require('../utils/errors');
 
 module.exports.createMovie = (req, res, next) => {
   const {
@@ -30,7 +26,7 @@ module.exports.createMovie = (req, res, next) => {
       res.send(data);
     })
     .catch((err) => {
-      parseMoviesError(err);
+      errors.parseMoviesError(err);
     })
     .catch(next);
 };
@@ -46,11 +42,11 @@ module.exports.getMovies = (req, res, next) => {
 module.exports.deleteMovieById = (req, res, next) => {
   Movie.findById(req.params.id)
     .orFail(() => {
-      throw new NotFoundError(`Фильм с id ${req.params.id} не найден`);
+      throw new errors.RequestError(errors.errorsContexts.notFoundError, `Фильм с id ${req.params.id} не найден`);
     })
     .then((movie) => {
       if (movie.owner.toString() !== req.user._id) {
-        throw new ForbiddenError('Недостаточно прав для удаления фильма');
+        throw new errors.RequestError(errors.errorsContexts.forbiddenError, `Фильм с id ${req.params.id} не найден`);
       }
       movie.remove().then(() => res.send({ message: movie }));
     })

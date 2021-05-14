@@ -44,18 +44,15 @@ module.exports.getMovies = (req, res, next) => {
 };
 
 module.exports.deleteMovieById = (req, res, next) => {
-  Movie.findOne({ movieId: req.params.id })
+  Movie.findById(req.params.id)
     .orFail(() => {
       throw new NotFoundError(`Фильм с id ${req.params.id} не найден`);
     })
-    .then((data) => {
-      if (data.owner.toString() !== req.user._id) {
+    .then((movie) => {
+      if (movie.owner.toString() !== req.user._id) {
         throw new ForbiddenError('Недостаточно прав для удаления фильма');
       }
-    })
-    .then(() => Movie.findOneAndRemove({ movieId: req.params.id }))
-    .then((data) => {
-      res.send(data);
+      movie.remove().then(() => res.send({ message: movie }));
     })
     .catch(next);
 };

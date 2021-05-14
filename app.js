@@ -30,13 +30,13 @@ mongoose.connect(databaseAdress, {
   useFindAndModify: false,
 });
 
+app.use(logger.requestLogger);
+
 app.use(bodyParser.json());
 
 app.use(limiter);
 app.use(helmet());
 app.use(cors);
-
-app.use(logger.requestLogger);
 
 app.use('/', userNotAuthRoutes);
 
@@ -49,9 +49,9 @@ app.use(() => {
   throw new errorTypes.UrlNotFoundError('Несуществующий путь');
 });
 
-app.use(celebrate.errors());
-
 app.use(logger.errorLogger);
+
+app.use(celebrate.errors());
 app.use(errorHandler);
 
 app.listen(PORT, () => {});

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const emailValidator = require('validator');
+const validatorTools = require('validator');
 
 const errorTypes = require('../utils/errors');
 
@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator(v) {
-        return emailValidator.isEmail(v);
+        return validatorTools.isEmail(v);
       },
       message: 'Неверный формат поле email',
     },

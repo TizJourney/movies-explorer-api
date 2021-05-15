@@ -48,7 +48,7 @@ module.exports.deleteMovieById = (req, res, next) => {
       if (movie.owner.toString() !== req.user._id) {
         throw new errors.RequestError(errors.errorsContexts.forbiddenError, `Фильм с id ${req.params.id} не найден`);
       }
-      movie.remove().then(() => res.send({ message: movie }));
+      return movie.remove().then(() => res.send({ message: movie }));
     })
     .catch(next);
 };

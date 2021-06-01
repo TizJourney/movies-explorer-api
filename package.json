@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/TizJourney/movies-explorer-api/issues"
   },
-  "homepage": "https://github.com/TizJourney/movies-explorer-api#readme",
+  "homepage": "./",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
